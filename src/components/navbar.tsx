@@ -2,7 +2,7 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 
 function NavStrip() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar expand="lg" className="second-color">
             <Container>
                 <Navbar.Brand href="/">Lock Hood</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

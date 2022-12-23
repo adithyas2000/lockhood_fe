@@ -7,10 +7,8 @@ import reportWebVitals from './reportWebVitals';
 import NavStrip from './components/navbar';
 import LoginPage from './components/login';
 import Dashboard from './components/dashboard';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, } from "react-router-dom";
+import './css/colors.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -37,8 +35,8 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <NavStrip/>
-    <RouterProvider router={router}/>
+    <NavStrip />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
