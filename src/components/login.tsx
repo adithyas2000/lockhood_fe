@@ -13,7 +13,7 @@ function LoginPage() {
 
     console.log(backend);
     return (
-        <div className="centerContainer shadow-lg p-5 mb-5 rounded fourth-color first-color-text">
+        <div className="centerContainer p-5 mb-5 rounded fourth-color first-color-text">
             <h4>Login</h4><br />
             <div className="cardContainer fourth-color">
 

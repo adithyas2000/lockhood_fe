@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
@@ -19,8 +20,9 @@ code {
   align-items: center;
   align-self: center;
   text-align: center;
-  margin-top: 100px;
+  padding: 150px;
   width: 80%;
+  margin-top: 100px;
 
 }
 
@@ -32,4 +34,25 @@ code {
   text-align: left;
   /* display: flex; */
   /* justify-content: center; */
+}
+
+body{
+  background-image: url(./assets/images/bgimage2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#root{
+  height: 100vh;
+}
+
+#mainNav{
+  line-height: 3;
+  /* position: fixed; */
+  
+  width: 100%;
+}
+
+.kanbanCol{
+  width: 0px;
 }

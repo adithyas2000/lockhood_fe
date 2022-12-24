@@ -9,10 +9,14 @@ import LoginPage from './components/login';
 import Dashboard from './components/dashboard';
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './css/colors.css';
+import KanbanBoard from './components/kanban';
+import KanbanCard from './components/kanbanCard';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+
 
 const router = createBrowserRouter([
   {
@@ -28,8 +32,12 @@ const router = createBrowserRouter([
     element: <Dashboard />
   },
   {
-    path: "/",
-    element: <LoginPage />
+    path: "/kanban",
+    element: <KanbanBoard />
+  },
+  {
+    path: "/kanbanCard",
+    element: <KanbanCard title='My title' header='My header' content='My content' type={1}/>
   },
 ]);
 

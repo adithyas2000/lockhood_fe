@@ -2,14 +2,14 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 
 function NavStrip() {
     return (
-        <Navbar expand="lg" className="second-color">
+        <Navbar expand="lg" className="second-color" id="mainNav">
             <Container>
                 <Navbar.Brand href="/">Lock Hood</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+                        <Nav.Link href="/kanban">Kanban Board</Nav.Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">
