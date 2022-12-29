@@ -10,6 +10,8 @@ function NavStrip() {
                     <Nav className="me-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/kanban">Kanban Board</Nav.Link>
+                        <Nav.Link href="/salesReport">Sales Report</Nav.Link>
+                        <Nav.Link href="/orderRequests">Order Requests</Nav.Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">

@@ -56,3 +56,11 @@ body{
 .kanbanCol{
   width: 0px;
 }
+
+.card{
+  width: 200px;
+}
+
+thead tr td{
+  font-weight: 700;
+}

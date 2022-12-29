@@ -47,7 +47,6 @@ function LoginPage() {
 
         if (isLogindata(data)) {
             var formData = data;
-
             if (typeof (backend) != "undefined") {
                 await axios.post(backend + "/", formData)
                     .then(res => {
