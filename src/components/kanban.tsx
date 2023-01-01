@@ -1,161 +1,120 @@
 import axios from "axios";
+import { func } from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Dropdown, FormGroup, FormLabel, Table } from "react-bootstrap";
 import { kanbanData } from "../types/kanbanData";
 import { isKanbanData } from "../validations/typeChecks";
 import KanbanCard from "./kanbanCard";
+import { JobStatus } from "../enums/enums";
 
 function KanbanBoard() {
+    
+    const columns = [JobStatus.BACKLOG, JobStatus.INPROGRESS, JobStatus.TESTING, JobStatus.DONE];
 
-    const [kanbanData, setKanbanData] = useState<Array<Array<kanbanData>>>([[{ title: "", header: "", content: "", id: 1, action: kanbanSendToNext }]]);
+    const [kanbanData, setKanbanData] = useState<Array<Array<kanbanData>>>([]);
     const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+    const [unit, setUnit] = useState("");
+    const [unitName, setUnitName] = useState("");
+    const [unitList, setUnitList] = useState<Array<unitData>>([]);
+    const [unitDropdownList, setDropdownList] = useState<Array<JSX.Element>>([]);
+
+    const options = {
+        headers: {
+            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
+        }
+    };
 
     useEffect(() => {
         // Get kanban data from backend
         if (typeof (backend) != 'undefined') {
-            getKanbanData();
+            // getKanbanData();
+            getUnits();
         } else {
-            console.log("Backend not defined. Using sample data...");
-            setKanbanData(
-                [
-                    [
-                        {
-                            title: "Title1",
-                            header: "Header1",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 1,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title2",
-                            header: "Header2",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 2,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title3",
-                            header: "Header3",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 3,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title4",
-                            header: "Header4",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 4,
-                            action: kanbanSendToNext
-                        },
-                    ],
-                    [
-                        {
-                            title: "Title1",
-                            header: "Header1",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 5,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title2",
-                            header: "Header2",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 6,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title3",
-                            header: "Header3",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 7,
-                            action: kanbanSendToNext
-                        },
-                    ],
-                    [
-                        {
-                            title: "Title1",
-                            header: "Header1",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 8,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title2",
-                            header: "Header2",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 9,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title3",
-                            header: "Header3",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 10,
-                            action: kanbanSendToNext
-                        },
-                    ],
-                    [
-                        {
-                            title: "Title1",
-                            header: "Header1",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 11,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title2",
-                            header: "Header2",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 12,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title3",
-                            header: "Header3",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 13,
-                            action: kanbanSendToNext
-                        },
-                    ],
-                    [
-                        {
-                            title: "Title1",
-                            header: "Header1",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 14,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title2",
-                            header: "Header2",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 15,
-                            action: kanbanSendToNext
-                        },
-                        {
-                            title: "Title3",
-                            header: "Header3",
-                            content: "This is placeholder content. This will explain the task",
-                            id: 16,
-                            action: kanbanSendToNext
-                        },
-                    ]
-                ]);
+            console.log("Backend not defined.");
         }
 
-    }, ["const"]);
+    }, []);
+
+    useEffect(() => {
+        if (unitList.length > 0) {
+            setUnitDropdown();
+        }
+
+    }, [unitList]);
+
+    useEffect(() => {
+        if (unit) {
+            unitList.forEach(u => {
+                const unitStr: string = unit;
+                const uID: string = u._id;
+                if (unitStr === uID) {
+                    console.log(`${unitStr} - ${uID}`);
+                    setUnitName(u.unitName);
+                    return;
+                } else {
+                    console.log(`No match : ${unitStr} - ${uID}`);
+                }
+            });
+
+            console.log("Get kanban data");
+            getKanbanData();
+        } else {
+            console.log(`Unit: ${unit}`);
+        }
+
+    }, [unit]);
+
+    function setUnitDropdown() {
+        console.log("Setting dropdown list" + unitList.length);
+        var unitElemets: Array<JSX.Element> = [];
+        unitList.forEach(unit => {
+            unitElemets.push(<Dropdown.Item eventKey={unit._id} key={unit._id}>{unit.unitName}</Dropdown.Item>);
+        });
+        setDropdownList(unitElemets);
+    };
+
+    type unitData = {
+        _id: string,
+        unitid: string,
+        unitName: string
+    };
+
+    function onUnitSelect(id: string | null) {
+        console.log(id);
+        if (id) {
+            setUnit(id);
+        }
+
+    };
+
+
+
+
 
 
 
     return (
         <div className="centerContainer p-5 mb-5 rounded fourth-color first-color-text">
 
+            <FormGroup className="leftContainer">
+                <FormLabel>Select Unit:</FormLabel>
+
+                <Dropdown className="m-3" onSelect={id => { onUnitSelect(id) }}>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        {unitName ? unitName : "Select Unit"}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        {unitDropdownList}
+                    </Dropdown.Menu>
+                </Dropdown>
+
+            </FormGroup>
+
             <Table striped bordered hover className="whitebg">
                 <thead>
                     <tr>
                         <th>Backlog</th>
-                        {/* remove to do */}
-                        <th>To Do</th>
                         <th>In Progress</th>
                         <th>In Testing</th>
                         <th>Done</th>
@@ -163,10 +122,9 @@ function KanbanBoard() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="kanbanCol">
+                        <td className="kanbanCol d-flex align-items-center">
                             <MakeKanbanCard colNo={1} />
                         </td>
-
                         <td className="kanbanCol">
                             <MakeKanbanCard colNo={2} />
                         </td>
@@ -176,13 +134,11 @@ function KanbanBoard() {
                         <td className="kanbanCol">
                             <MakeKanbanCard colNo={4} />
                         </td>
-                        <td className="kanbanCol">
-                            <MakeKanbanCard colNo={5} />
-                        </td>
                     </tr>
 
                 </tbody>
             </Table>
+            { }
         </div>
     );
     type properties = {
@@ -193,11 +149,12 @@ function KanbanBoard() {
         var cardArray: Array<React.ReactElement> = [];
 
         const kanbanCol = kanbanData[props.colNo - 1];
+        console.log(`Column ${props.colNo}`);
         if (kanbanCol == undefined) {
             return null;
         }
         kanbanCol.forEach(card => {
-            cardArray.push(<tr><td key={card.title}><KanbanCard id={card.id} action={kanbanSendToNext} title={card.title} header={card.header} content={card.content} type={props.colNo} /></td></tr>);
+            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard id={card.jobid} action={kanbanSendToNext} title={`${card.status} - ${card.empid}`} header={card.status} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
         });
         // for (let n = 1; n < 10; n++) {
         //     cardArray.push(<tr><td key={n}><KanbanCard title={"Title: " + n} header={"Header : " + n} content={"Content: " + n} type={props.colNo} /></td></tr>);
@@ -207,31 +164,73 @@ function KanbanBoard() {
 
     function kanbanSendToNext(id: number, type: number) {
         console.log("Pressed button:" + id + " with type " + type);
-        const changeData={
-            'id':id,
-            'currentType':type,
-            'nextType':type+1
+        const changeData = {
+            'jobid': id,
+            'status': columns[type]
         };
-        axios.post(backend + "/",changeData)
-        .then(()=>{
-            getKanbanData();
-        })
+        axios.post(backend + "/api/v1/job/update", changeData,options)
+            .then(() => {
+                console.log("Success");
+                getKanbanData();
+            })
     }
 
     function getKanbanData() {
         if (typeof (backend) != 'undefined') {
             console.log("Sending req to get kanban data");
-            axios.get(backend + '/')
+            
+            axios.get(backend + '/api/v1/job/LBU', options)
                 .then(res => {
                     console.log(res.data);
-                    if (isKanbanData(res.data)) {
-                        setKanbanData(res.data);
+                    const resArray: Array<any> = res.data.data;
+
+                    console.log("Res array: ");
+                    console.table(resArray);
+                    //Seperate into columns
+                    const tempKanbanData: Array<kanbanData> = res.data.data;
+                    var tempKanbanCol: Array<Array<kanbanData>> = [];
+                    columns.forEach(col => {
+                        var tempData: Array<kanbanData> = [];
+                        tempKanbanData.forEach(item => {
+                            if (col === item.status) {
+                                console.log(`Pushing ${item.status} to ${col}`);
+                                tempData.push(item);
+                            }
+                           
+                        });
+                        if (tempData.length > 0) {
+                            console.log("Pushing to tempCol: " + tempData.length);
+                            console.table(tempData);
+                            tempKanbanCol.push(tempData);
+                        }
+
+                        tempData = [];
+
+                    });
+
+                    if (isKanbanData(tempKanbanCol)) {
+                        console.log("Kanban state:");
+                        console.log(tempKanbanCol);
+                        setKanbanData(tempKanbanCol);
                     } else {
                         console.error("Invalid kanban data");
                     }
                 })
                 .catch(err => console.error(err));
         }
+    };
+
+    function getUnits() {
+        axios.get(backend + '/api/v1/units', options)
+            .then(res => {
+                console.log(res.data);
+                var unitArray: Array<unitData> = res.data.data;
+                setUnitList(unitArray);
+                // setUnitDropdown();
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 }
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { authRes } from "../types/authResponse";
 import { loginData } from "../types/logindata";
 import { isAuthRes, isLogindata } from "../validations/typeChecks";
 
@@ -8,7 +9,7 @@ const backend = process.env.REACT_APP_BACKEND_DOMAIN;
 
 function LoginPage() {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     console.log(backend);
@@ -20,8 +21,8 @@ function LoginPage() {
 
                 <Form onSubmit={e => loginRequest(e)}>
                     <Form.Group>
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" onChange={e => setEmail(e.target.value)} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
@@ -41,18 +42,22 @@ function LoginPage() {
 
 
         const data = {
-            "username": username,
+            "email": email,
             "password": password
         };
 
         if (isLogindata(data)) {
             var formData = data;
             if (typeof (backend) != "undefined") {
-                await axios.post(backend + "/", formData)
+                await axios.post(backend + "/api/v1/auth/login", formData)
                     .then(res => {
                         if(isAuthRes(res.data)){
                             console.log("Auth response:");
                             console.log(res.data)
+                            var authData:authRes=res.data;
+                            window.sessionStorage.setItem('token',authData.token);
+                            window.sessionStorage.setItem('refreshToken',authData.refreshToken);
+                            window.sessionStorage.setItem('userDept',authData.data.user.userDept);
                         }else{
                             console.log("Invalid response:");
                             console.log(res.data);
