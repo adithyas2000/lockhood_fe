@@ -198,11 +198,11 @@ function KanbanBoard() {
                             }
                            
                         });
-                        if (tempData.length > 0) {
+                        // if (tempData.length > 0) {
                             console.log("Pushing to tempCol: " + tempData.length);
                             console.table(tempData);
                             tempKanbanCol.push(tempData);
-                        }
+                        // }
 
                         tempData = [];
 

@@ -23,7 +23,7 @@ const colourmap=[
     'Mark \'In Progress\'',
     'Mark \'In Testing\'',
     'Mark \'Done\'',
-    'Mark \'Undefined\'',
+    'Remove Task',
     'Mark \'Undefined\'',
     'Mark \'Undefined\'',
 
