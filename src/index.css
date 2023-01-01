@@ -5,9 +5,62 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.centerContainer{
+  margin: auto;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  padding: 150px;
+  width: 80%;
+  margin-top: 100px;
+
+}
+
+.cardContainer{
+  margin: auto;
+  width: 30%;
+  /* align-self: center; */
+  /* align-items: center; */
+  text-align: left;
+  /* display: flex; */
+  /* justify-content: center; */
+}
+
+body{
+  background-image: url(./assets/images/bgimage2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#root{
+  height: 100vh;
+}
+
+#mainNav{
+  line-height: 3;
+  /* position: fixed; */
+  
+  width: 100%;
+}
+
+.kanbanCol{
+  width: 0px;
+}
+
+.card{
+  width: 200px;
+}
+
+thead tr td{
+  font-weight: 700;
 }

@@ -7,14 +7,18 @@ import reportWebVitals from './reportWebVitals';
 import NavStrip from './components/navbar';
 import LoginPage from './components/login';
 import Dashboard from './components/dashboard';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, } from "react-router-dom";
+import './css/colors.css';
+import KanbanBoard from './components/kanban';
+import KanbanCard from './components/kanbanCard';
+import SalesPage from './components/salesPage';
+import OrderRequestsPage from './components/orderRequestsPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+
 
 const router = createBrowserRouter([
   {
@@ -30,16 +34,28 @@ const router = createBrowserRouter([
     element: <Dashboard />
   },
   {
-    path: "/",
-    element: <LoginPage />
+    path: "/kanban",
+    element: <KanbanBoard />
   },
+  {
+    path: "/kanbanCard",
+    element: <KanbanCard action={function(){console.log("TestKanbanCardEndpoint");}} id={1} title='My title' header='My header' content='My content' type={1}/>
+  },
+  {
+    path:"/salesReport",
+    element:<SalesPage/>
+  },
+  {
+    path:'/orderRequests',
+    element:<OrderRequestsPage/>
+  }
 ]);
 
 root.render(
-  <React.StrictMode>
-    <NavStrip/>
-    <RouterProvider router={router}/>
-  </React.StrictMode>
+  <>
+    <NavStrip />
+    <RouterProvider router={router} />
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function

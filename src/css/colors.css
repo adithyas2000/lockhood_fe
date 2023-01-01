@@ -1,0 +1,32 @@
+.first-color { 
+	background: #e7eaf6; 
+}
+	
+.second-color { 
+	background: #a2a8d3; 
+}
+
+.third-color { 
+	background: #38598b; 
+}
+
+.fourth-color { 
+	background: #113f67; 
+}
+
+.first-color-text{
+    color: #e7eaf6;
+}
+.second-color-text{
+    color: #a2a8d3;
+}
+.third-color-text{
+    color: #38598b;
+}
+.fourth-color-text{
+    color: #113f67;
+}
+
+.whitebg{
+    background-color: white;
+}
