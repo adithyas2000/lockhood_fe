@@ -39,7 +39,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/kanbanCard",
-    element: <KanbanCard action={function(){console.log("TestKanbanCardEndpoint");}} id={1} title='My title' header='My header' content='My content' type={1}/>
+    element: <KanbanCard action={function(){console.log("TestKanbanCardEndpoint");}} id={`1`} title='My title' header='My header' content='My content' type={1}/>
   },
   {
     path:"/salesReport",

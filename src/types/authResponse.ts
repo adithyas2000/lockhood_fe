@@ -1,5 +1,10 @@
 export type authRes={
-    authLevel:number,
-    authToken:string,
-    userId:string
+    data:{user:{userDept:string}},
+    status:string,
+    token:string,
+    refreshToken:string
+}
+
+type authData={
+
 }
