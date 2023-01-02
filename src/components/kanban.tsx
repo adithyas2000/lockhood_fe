@@ -8,13 +8,14 @@ import KanbanCard from "./kanbanCard";
 import { JobStatus } from "../enums/enums";
 
 function KanbanBoard() {
-    
+
     const columns = [JobStatus.BACKLOG, JobStatus.INPROGRESS, JobStatus.TESTING, JobStatus.DONE];
 
     const [kanbanData, setKanbanData] = useState<Array<Array<kanbanData>>>([]);
     const backend = process.env.REACT_APP_BACKEND_DOMAIN;
     const [unit, setUnit] = useState("");
     const [unitName, setUnitName] = useState("");
+    const [unitId, setUnitId] = useState("");
     const [unitList, setUnitList] = useState<Array<unitData>>([]);
     const [unitDropdownList, setDropdownList] = useState<Array<JSX.Element>>([]);
 
@@ -50,19 +51,24 @@ function KanbanBoard() {
                 if (unitStr === uID) {
                     console.log(`${unitStr} - ${uID}`);
                     setUnitName(u.unitName);
+                    setUnitId(u.unitid);
                     return;
                 } else {
                     console.log(`No match : ${unitStr} - ${uID}`);
                 }
             });
 
-            console.log("Get kanban data");
-            getKanbanData();
+
         } else {
             console.log(`Unit: ${unit}`);
         }
 
     }, [unit]);
+
+    useEffect(() => {
+        console.log("Get kanban data");
+        getKanbanData();
+    },[unitId]);
 
     function setUnitDropdown() {
         console.log("Setting dropdown list" + unitList.length);
@@ -122,7 +128,7 @@ function KanbanBoard() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="kanbanCol d-flex align-items-center">
+                        <td className="kanbanCol">
                             <MakeKanbanCard colNo={1} />
                         </td>
                         <td className="kanbanCol">
@@ -168,7 +174,7 @@ function KanbanBoard() {
             'jobid': id,
             'status': columns[type]
         };
-        axios.post(backend + "/api/v1/job/update", changeData,options)
+        axios.post(backend + "/api/v1/job/update", changeData, options)
             .then(() => {
                 console.log("Success");
                 getKanbanData();
@@ -178,8 +184,8 @@ function KanbanBoard() {
     function getKanbanData() {
         if (typeof (backend) != 'undefined') {
             console.log("Sending req to get kanban data");
-            
-            axios.get(backend + '/api/v1/job/LBU', options)
+
+            axios.get(backend + `/api/v1/job/${unitId}`, options)
                 .then(res => {
                     console.log(res.data);
                     const resArray: Array<any> = res.data.data;
@@ -196,12 +202,12 @@ function KanbanBoard() {
                                 console.log(`Pushing ${item.status} to ${col}`);
                                 tempData.push(item);
                             }
-                           
+
                         });
                         // if (tempData.length > 0) {
-                            console.log("Pushing to tempCol: " + tempData.length);
-                            console.table(tempData);
-                            tempKanbanCol.push(tempData);
+                        console.log("Pushing to tempCol: " + tempData.length);
+                        console.table(tempData);
+                        tempKanbanCol.push(tempData);
                         // }
 
                         tempData = [];
