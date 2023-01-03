@@ -1,11 +1,12 @@
 import axios from "axios";
 import { func } from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Dropdown, FormGroup, FormLabel, Table } from "react-bootstrap";
+import { Button, Dropdown, FormGroup, FormLabel, Table } from "react-bootstrap";
 import { kanbanData } from "../types/kanbanData";
 import { isKanbanData } from "../validations/typeChecks";
 import KanbanCard from "./kanbanCard";
-import { JobStatus } from "../enums/enums";
+import { JobStatus, ResponseStatus } from "../enums/enums";
+import { unitData } from "../types/unitData";
 
 function KanbanBoard() {
 
@@ -66,9 +67,12 @@ function KanbanBoard() {
     }, [unit]);
 
     useEffect(() => {
-        console.log("Get kanban data");
-        getKanbanData();
-    },[unitId]);
+        if (unitId) {
+            console.log("Get kanban data");
+            getKanbanData();
+        }
+
+    }, [unitId]);
 
     function setUnitDropdown() {
         console.log("Setting dropdown list" + unitList.length);
@@ -79,11 +83,7 @@ function KanbanBoard() {
         setDropdownList(unitElemets);
     };
 
-    type unitData = {
-        _id: string,
-        unitid: string,
-        unitName: string
-    };
+
 
     function onUnitSelect(id: string | null) {
         console.log(id);
@@ -130,6 +130,7 @@ function KanbanBoard() {
                     <tr>
                         <td className="kanbanCol">
                             <MakeKanbanCard colNo={1} />
+                            <Button onClick={e => window.location.href = `kanban/addjob/${unit}`} disabled={unit ? false : true}>Add new job</Button>
                         </td>
                         <td className="kanbanCol">
                             <MakeKanbanCard colNo={2} />
@@ -160,7 +161,7 @@ function KanbanBoard() {
             return null;
         }
         kanbanCol.forEach(card => {
-            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard id={card.jobid} action={kanbanSendToNext} title={`${card.status} - ${card.empid}`} header={card.status} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
+            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard id={card.jobid} action={kanbanSendToNext} title={`Employee ID - ${card.empid}`} header={card.jobid} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
         });
         // for (let n = 1; n < 10; n++) {
         //     cardArray.push(<tr><td key={n}><KanbanCard title={"Title: " + n} header={"Header : " + n} content={"Content: " + n} type={props.colNo} /></td></tr>);
@@ -168,17 +169,46 @@ function KanbanBoard() {
         return <>{cardArray}</>;
     }
 
-    function kanbanSendToNext(id: number, type: number) {
-        console.log("Pressed button:" + id + " with type " + type);
-        const changeData = {
-            'jobid': id,
-            'status': columns[type]
-        };
-        axios.post(backend + "/api/v1/job/update", changeData, options)
-            .then(() => {
-                console.log("Success");
-                getKanbanData();
-            })
+    function kanbanSendToNext(id: string, type: number) {
+        if (type !== 4) {
+            if (type === 3) {
+                axios.get(backend + `/api/v1/job/complete/${id}`, options)
+                    .then(res => {
+                        console.log("Successfully removed");
+                        console.log(res.data);
+                        if (res.data.status === ResponseStatus.SUCCESS) {
+                            alert(`Successfully removed job with id ${id}`);
+                            // window.location.reload();
+                            getKanbanData();
+                        }
+                    })
+                    .catch(err => {
+                        console.log("Errorremoving job");
+                        console.error(err);
+                    });
+
+            } else {
+                console.log("Pressed button:" + id + " with type " + type);
+                const changeData = {
+                    'jobid': id,
+                    'status': columns[type]
+                };
+                axios.post(backend + "/api/v1/job/update", changeData, options)
+                    .then((res) => {
+                        console.log(res.data);
+                        if(res.data.status===ResponseStatus.SUCCESS){
+                            console.log("Successfully updated");
+                        }else{
+                            alert(`Error: ${res.data.status}`);
+                        }
+                        getKanbanData();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
+            }
+        }
+
     }
 
     function getKanbanData() {

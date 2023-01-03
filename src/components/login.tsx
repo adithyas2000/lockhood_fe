@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { authRes } from "../types/authResponse";
 import { loginData } from "../types/logindata";
@@ -12,7 +12,11 @@ function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    console.log(backend);
+    useEffect(()=>{
+        if(window.sessionStorage.getItem('email')){
+            window.location.href='/kanban';
+        }
+    });
     return (
         <div className="centerContainer p-5 mb-5 rounded fourth-color first-color-text">
             <h4>Login</h4><br />
@@ -58,6 +62,8 @@ function LoginPage() {
                             window.sessionStorage.setItem('token',authData.token);
                             window.sessionStorage.setItem('refreshToken',authData.refreshToken);
                             window.sessionStorage.setItem('userDept',authData.data.user.userDept);
+                            window.sessionStorage.setItem('email',email);
+                            window.location.reload();
                         }else{
                             console.log("Invalid response:");
                             console.log(res.data);
