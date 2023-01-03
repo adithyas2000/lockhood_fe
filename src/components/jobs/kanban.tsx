@@ -2,11 +2,11 @@ import axios from "axios";
 import { func } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, FormGroup, FormLabel, Table } from "react-bootstrap";
-import { kanbanData } from "../types/kanbanData";
-import { isKanbanData } from "../validations/typeChecks";
+import { kanbanData } from "../../types/kanbanData";
+import { isKanbanData } from "../../validations/typeChecks";
 import KanbanCard from "./kanbanCard";
-import { JobStatus, ResponseStatus } from "../enums/enums";
-import { unitData } from "../types/unitData";
+import { JobStatus, ResponseStatus } from "../../enums/enums";
+import { unitData } from "../../types/unitData";
 
 function KanbanBoard() {
 
@@ -130,7 +130,7 @@ function KanbanBoard() {
                     <tr>
                         <td className="kanbanCol">
                             <MakeKanbanCard colNo={1} />
-                            <Button onClick={e => window.location.href = `kanban/addjob/${unit}`} disabled={unit ? false : true}>Add new job</Button>
+                            <Button onClick={e => window.location.href = `addjob/${unit}`} disabled={unit ? false : true}>Add new job</Button>
                         </td>
                         <td className="kanbanCol">
                             <MakeKanbanCard colNo={2} />
@@ -252,7 +252,7 @@ function KanbanBoard() {
                         console.error("Invalid kanban data");
                     }
                 })
-                .catch(err => console.error(err));
+                .catch(err => {console.error(err);alert(err.response.data.message)});
         }
     };
 

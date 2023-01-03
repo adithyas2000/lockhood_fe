@@ -7,11 +7,11 @@ function NavStrip() {
 
         const path: string = window.location.href;
         const locArray: Array<string> = path.split('/');
-        const loc=locArray[locArray.length - 1];
+        const loc = locArray[locArray.length - 1];
         console.log(locArray[locArray.length - 1]);
 
         if (!window.sessionStorage.getItem('email') && loc !== 'login') {
-            window.location.href='/login';
+            window.location.href = '/login';
 
         }
     })
@@ -24,10 +24,22 @@ function NavStrip() {
                     {window.sessionStorage.getItem('email') ?
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/kanban">Kanban Board</Nav.Link>
-                            <Nav.Link href="/salesReport">Sales Report</Nav.Link>
-                            <Nav.Link href="/orderRequests">Order Requests</Nav.Link>
-                            <Nav.Link href="/employees/add">Add employees</Nav.Link>
+
+                            <NavDropdown title="Employees" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/employees/add">Add employees</NavDropdown.Item>
+                            </NavDropdown>
+
+                            <NavDropdown title="Jobs" id="basic-nav-dropdown">
+
+                                <NavDropdown.Item href="/job/kanban">Kanban Board</NavDropdown.Item>
+                                <NavDropdown.Item href="/salesReport">Sales Report</NavDropdown.Item>
+                                <NavDropdown.Item href="/orderRequests">Order Requests</NavDropdown.Item>
+                            </NavDropdown>
+
+                            <NavDropdown title="Inventory" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/inventory/create">Create Inventory</NavDropdown.Item>
+                                <NavDropdown.Item href="/inventory/view">View Inventory</NavDropdown.Item>
+                            </NavDropdown>
 
                         </Nav> : ""}
                     <Nav>

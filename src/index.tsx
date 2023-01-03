@@ -5,16 +5,20 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import NavStrip from './components/navbar';
-import LoginPage from './components/login';
+import LoginPage from './components/auth/login';
 import Dashboard from './components/dashboard';
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './css/colors.css';
-import KanbanBoard from './components/kanban';
-import KanbanCard from './components/kanbanCard';
+import KanbanBoard from './components/jobs/kanban';
+import KanbanCard from './components/jobs/kanbanCard';
 import SalesPage from './components/salesPage';
 import OrderRequestsPage from './components/orderRequestsPage';
-import AddJob from './components/addJob';
-import AddEmployeePage from './components/addEmployee';
+import AddJob from './components/jobs/addJob';
+import AddEmployeePage from './components/employees/addEmployee';
+import CreateInventoryPage from './components/inventory/createInventory';
+import ViewInventory from './components/inventory/viewInventory';
+import UpdateInventoryPage from './components/inventory/updateInventory';
+import AssignEmployeePage from './components/jobs/assignEmployee';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -35,18 +39,23 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <Dashboard />
   },
+  // JOB ROUTES
   {
-    path: "/kanban",
+    path: "/job/kanban",
     element: <KanbanBoard />
   },
   {
-    path:"/kanban/addJob/:uId",
+    path:"/job/addJob/:uId",
     element:<AddJob/>
+  },{
+    path:"/job/assign/:jId",
+    element:<AssignEmployeePage/>
   },
   {
     path: "/kanbanCard",
     element: <KanbanCard action={function(){console.log("TestKanbanCardEndpoint");}} id={`1`} title='My title' header='My header' content='My content' type={1}/>
   },
+  // REPORTS
   {
     path:"/salesReport",
     element:<SalesPage/>
@@ -55,9 +64,23 @@ const router = createBrowserRouter([
     path:'/orderRequests',
     element:<OrderRequestsPage/>
   },
+  // EMPLOYEE ROUTES
   {
     path:'/employees/add',
     element:<AddEmployeePage/>
+  },
+  // INVENTORY ROUTES
+  {
+    path:'/inventory/create',
+    element:<CreateInventoryPage/>
+  },
+  {
+    path:'/inventory/view',
+    element:<ViewInventory/>
+  },
+  {
+    path:'/inventory/update/:mId',
+    element:<UpdateInventoryPage/>
   }
 ]);
 

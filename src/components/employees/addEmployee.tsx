@@ -1,8 +1,8 @@
 import axios from "axios";
 import { MouseEvent, useEffect, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
-import { ResponseStatus } from "../enums/enums";
-import { unitData } from "../types/unitData";
+import { ResponseStatus } from "../../enums/enums";
+import { unitData } from "../../types/unitData";
 
 function AddEmployeePage() {
 
