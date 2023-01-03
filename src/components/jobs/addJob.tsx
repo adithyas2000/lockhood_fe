@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { useParams } from "react-router";
-import { unitData } from "../types/unitData";
+import { unitData } from "../../types/unitData";
 
 function AddJob() {
     const backend = process.env.REACT_APP_BACKEND_DOMAIN;

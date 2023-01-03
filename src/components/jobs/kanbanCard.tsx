@@ -37,7 +37,7 @@ function KanbanCard(props:properties){
           text={props.type===7 ? "white" : "dark"}
           className="mb-2"
         >
-          <Card.Header>{props.header}</Card.Header>
+          <Card.Header><a href={`/job/assign/${props.id}`}>{props.header}</a></Card.Header>
           <Card.Body>
             <Card.Title>{props.type>0&&props.type<8?props.title:"Out of range"} </Card.Title>
             <Card.Text>

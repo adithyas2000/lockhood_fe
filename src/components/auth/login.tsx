@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { authRes } from "../types/authResponse";
-import { loginData } from "../types/logindata";
-import { isAuthRes, isLogindata } from "../validations/typeChecks";
+import { authRes } from "../../types/authResponse";
+import { loginData } from "../../types/logindata";
+import { isAuthRes, isLogindata } from "../../validations/typeChecks";
 
 const backend = process.env.REACT_APP_BACKEND_DOMAIN;
 
@@ -14,7 +14,7 @@ function LoginPage() {
 
     useEffect(()=>{
         if(window.sessionStorage.getItem('email')){
-            window.location.href='/kanban';
+            window.location.href='/job/kanban';
         }
     });
     return (

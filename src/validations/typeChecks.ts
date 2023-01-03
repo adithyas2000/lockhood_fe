@@ -1,6 +1,8 @@
 import { authRes } from "../types/authResponse.js";
+import { employeeData } from "../types/employeeData.js";
 import { kanbanData } from "../types/kanbanData.js";
 import { loginData } from "../types/logindata.js";
+import { materialData } from "../types/materialData.js";
 import { orderRequestData } from "../types/orderRequestData.js";
 import { salesReport } from "../types/salesReportData.js";
 
@@ -80,3 +82,26 @@ export function isOrderReqData(data: any): orderRequestData {
 
     );
 };
+
+export function isMaterialData(data: any): materialData {
+    return (
+        data &&
+        typeof (data['_id']) === 'string' &&
+        typeof (data['materialid']) === 'string' &&
+        typeof (data['materialName']) === 'string'
+    );
+}
+
+export function isEmployeeData(data: any): employeeData {
+    return (
+        data &&
+        typeof (data['_id']) === 'string' &&
+        typeof (data['unitid']) === 'string' &&
+        typeof (data['empid']) === 'string' &&
+        typeof (data['designation']) === 'string' &&
+        typeof (data['firstName']) === 'string' &&
+        typeof (data['lastName']) === 'string' &&
+        typeof (data['email']) === 'string' &&
+        typeof (data['contactNumber']) === 'string'
+    )
+}
