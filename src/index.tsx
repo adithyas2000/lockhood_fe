@@ -13,6 +13,8 @@ import KanbanBoard from './components/kanban';
 import KanbanCard from './components/kanbanCard';
 import SalesPage from './components/salesPage';
 import OrderRequestsPage from './components/orderRequestsPage';
+import AddJob from './components/addJob';
+import AddEmployeePage from './components/addEmployee';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
     element: <KanbanBoard />
   },
   {
+    path:"/kanban/addJob/:uId",
+    element:<AddJob/>
+  },
+  {
     path: "/kanbanCard",
     element: <KanbanCard action={function(){console.log("TestKanbanCardEndpoint");}} id={`1`} title='My title' header='My header' content='My content' type={1}/>
   },
@@ -48,6 +54,10 @@ const router = createBrowserRouter([
   {
     path:'/orderRequests',
     element:<OrderRequestsPage/>
+  },
+  {
+    path:'/employees/add',
+    element:<AddEmployeePage/>
   }
 ]);
 

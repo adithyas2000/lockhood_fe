@@ -12,8 +12,8 @@ import { Button, Card } from "react-bootstrap";
 const colourmap=[
     'primary',
     'secondary',
-    'success',
     'warning',
+    'success',
     'info',
     'light',
     'dark',
@@ -37,13 +37,14 @@ function KanbanCard(props:properties){
           text={props.type===7 ? "white" : "dark"}
           className="mb-2"
         >
-          <Card.Header>{props.header+" - "+props.id}</Card.Header>
+          <Card.Header>{props.header}</Card.Header>
           <Card.Body>
             <Card.Title>{props.type>0&&props.type<8?props.title:"Out of range"} </Card.Title>
             <Card.Text>
                 {props.content}
+                {props.type}
             </Card.Text>
-            <Button variant="dark" onClick={(e)=>{e.preventDefault();props.action(props.id,props.type);}}>{nextMap[props.type-1]}</Button>
+            {(props.type!==4)?<Button variant="dark" onClick={(e)=>{e.preventDefault();props.action(props.id,props.type);}}>{nextMap[props.type-1]}</Button>:""}
           </Card.Body>
         </Card>
     );
