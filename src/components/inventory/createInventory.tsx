@@ -2,17 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { ResponseStatus } from "../../enums/enums";
+import { BackendAddress, RequestOptions } from "../../functions/HTTPReqData";
 
 function CreateInventoryPage() {
 
-    const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+    const backend = BackendAddress;
     const [matName,setMatName]=useState("");
 
-    const options = {
-        headers: {
-            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
-        }
-    };
+    const options = RequestOptions;
 
     function addInventory(){
         if(matName){

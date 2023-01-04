@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { ResponseStatus } from "../../enums/enums";
+import { BackendAddress, RequestOptions } from "../../functions/HTTPReqData";
 import { employeeData } from "../../types/employeeData";
+
 
 function AssignEmployeePage() {
 
@@ -13,13 +15,9 @@ function AssignEmployeePage() {
     const [empDropdown,setEmpDropdown]=useState<Array<JSX.Element>>([]);
 
     const { jId } = useParams();
-    const options = {
-        headers: {
-            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
-        }
-    };
+    const options = RequestOptions;
 
-    const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+    const backend = BackendAddress;
 
     useEffect(() => {
         getEmployees();
@@ -47,8 +45,9 @@ function AssignEmployeePage() {
     },[empId])
 
     function getEmployees() {
-        axios.get(backend + '/api/v1/employee', options)
+        axios.get(backend + `/api/v1/employee/${window.sessionStorage.getItem('deptId')}`, options)
             .then(res => {
+                console.log(res.data);
                 if (res.data.status === ResponseStatus.SUCCESS) {
                     const tempArray: Array<employeeData> = res.data.data;
                     setEmpList(tempArray);

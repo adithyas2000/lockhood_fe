@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { ResponseStatus } from "../../enums/enums";
+import { BackendAddress, RequestOptions } from "../../functions/HTTPReqData";
 import { materialData } from "../../types/materialData";
 
 function ViewInventory() {
@@ -9,12 +10,8 @@ function ViewInventory() {
     const [matList, setMatList] = useState<Array<materialData>>([]);
     const [rowList,setRowList]=useState<Array<JSX.Element>>([]);
 
-    const backend = process.env.REACT_APP_BACKEND_DOMAIN;
-    const options = {
-        headers: {
-            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
-        }
-    };
+    const backend = BackendAddress;
+    const options = RequestOptions;
 
     useEffect(() => {
         getInventory();

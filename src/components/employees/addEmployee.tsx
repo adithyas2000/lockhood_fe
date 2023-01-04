@@ -2,6 +2,7 @@ import axios from "axios";
 import { MouseEvent, useEffect, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { ResponseStatus } from "../../enums/enums";
+import { BackendAddress, RequestOptions } from "../../functions/HTTPReqData";
 import { unitData } from "../../types/unitData";
 
 function AddEmployeePage() {
@@ -9,7 +10,7 @@ function AddEmployeePage() {
     const [unitName, setUnitName] = useState("");
     const [unit, setUnit] = useState("");
     const [unitList, setUnitList] = useState<Array<unitData>>([]);
-    const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+    const backend = BackendAddress;
     const [unitDropdownList, setUnitDropdown] = useState<Array<JSX.Element>>([]);
     const [unitId, setUnitId] = useState("");
 
@@ -19,11 +20,7 @@ function AddEmployeePage() {
     const [phone,setPhone]=useState("");
 
 
-    const options = {
-        headers: {
-            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
-        }
-    };
+    const options = RequestOptions;
 
     function getUnitList() {
         axios.get(backend + '/api/v1/units', options)

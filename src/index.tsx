@@ -19,6 +19,7 @@ import CreateInventoryPage from './components/inventory/createInventory';
 import ViewInventory from './components/inventory/viewInventory';
 import UpdateInventoryPage from './components/inventory/updateInventory';
 import AssignEmployeePage from './components/jobs/assignEmployee';
+import ViewAllEmployeesPage from './components/employees/viewAllEmployees';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -51,10 +52,6 @@ const router = createBrowserRouter([
     path:"/job/assign/:jId",
     element:<AssignEmployeePage/>
   },
-  {
-    path: "/kanbanCard",
-    element: <KanbanCard action={function(){console.log("TestKanbanCardEndpoint");}} id={`1`} title='My title' header='My header' content='My content' type={1}/>
-  },
   // REPORTS
   {
     path:"/salesReport",
@@ -68,6 +65,10 @@ const router = createBrowserRouter([
   {
     path:'/employees/add',
     element:<AddEmployeePage/>
+  },
+  {
+    path:'employees/view',
+    element:<ViewAllEmployeesPage/>
   },
   // INVENTORY ROUTES
   {

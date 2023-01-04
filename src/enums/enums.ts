@@ -76,3 +76,8 @@ export enum Designation {
   SUPERVISOR = "supervisor",
   EMPLOYEE = "employee",
 }
+
+export enum ViewUsersBy{
+  UNIT_ID="byUnit",
+  ALL="all"
+}

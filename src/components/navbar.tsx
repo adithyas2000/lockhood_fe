@@ -25,10 +25,13 @@ function NavStrip() {
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
 
+                            {/* Employees */}
                             <NavDropdown title="Employees" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/employees/add">Add employees</NavDropdown.Item>
+                                <NavDropdown.Item href="/employees/view">View employees</NavDropdown.Item>
                             </NavDropdown>
 
+                            {/* Jobs */}
                             <NavDropdown title="Jobs" id="basic-nav-dropdown">
 
                                 <NavDropdown.Item href="/job/kanban">Kanban Board</NavDropdown.Item>
@@ -36,6 +39,7 @@ function NavStrip() {
                                 <NavDropdown.Item href="/orderRequests">Order Requests</NavDropdown.Item>
                             </NavDropdown>
 
+                            {/* Inventory */}
                             <NavDropdown title="Inventory" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/inventory/create">Create Inventory</NavDropdown.Item>
                                 <NavDropdown.Item href="/inventory/view">View Inventory</NavDropdown.Item>

@@ -3,6 +3,7 @@ function logout(){
     window.sessionStorage.removeItem('refreshToken');
     window.sessionStorage.removeItem('userDept');
     window.sessionStorage.removeItem('email');
+    window.sessionStorage.removeItem('deptId');
 
 }
 

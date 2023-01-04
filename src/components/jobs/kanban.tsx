@@ -7,24 +7,22 @@ import { isKanbanData } from "../../validations/typeChecks";
 import KanbanCard from "./kanbanCard";
 import { JobStatus, ResponseStatus } from "../../enums/enums";
 import { unitData } from "../../types/unitData";
+import { BackendAddress, RequestOptions } from "../../functions/HTTPReqData";
 
 function KanbanBoard() {
 
     const columns = [JobStatus.BACKLOG, JobStatus.INPROGRESS, JobStatus.TESTING, JobStatus.DONE];
 
     const [kanbanData, setKanbanData] = useState<Array<Array<kanbanData>>>([]);
-    const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+    const backend = BackendAddress;
     const [unit, setUnit] = useState("");
     const [unitName, setUnitName] = useState("");
     const [unitId, setUnitId] = useState("");
     const [unitList, setUnitList] = useState<Array<unitData>>([]);
     const [unitDropdownList, setDropdownList] = useState<Array<JSX.Element>>([]);
+    const [isUnitHead, setIsUnitHead] = useState<boolean>(false);
 
-    const options = {
-        headers: {
-            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
-        }
-    };
+    const options = RequestOptions;
 
     useEffect(() => {
         // Get kanban data from backend
@@ -40,7 +38,25 @@ function KanbanBoard() {
     useEffect(() => {
         if (unitList.length > 0) {
             setUnitDropdown();
-        }
+
+            unitList.forEach(unit => {
+                const uidFromBE: string = unit.unitid;
+                const tempId = window.sessionStorage.getItem('deptId');
+                if (tempId) {
+                    const uidFromSession: string = tempId;
+                    console.log(`unit.unitId - ${uidFromBE} : sessionStorage - ${uidFromSession}`);
+                    if (uidFromBE === uidFromSession) {
+                        setIsUnitHead(true);
+                        setUnitId(unit.unitid);
+                        setUnitName(unit.unitName);
+                        // return;
+                    }
+                }
+
+
+            });
+        };
+
 
     }, [unitList]);
 
@@ -74,11 +90,12 @@ function KanbanBoard() {
 
     }, [unitId]);
 
+
     function setUnitDropdown() {
         console.log("Setting dropdown list" + unitList.length);
         var unitElemets: Array<JSX.Element> = [];
         unitList.forEach(unit => {
-            unitElemets.push(<Dropdown.Item eventKey={unit._id} key={unit._id}>{unit.unitName}</Dropdown.Item>);
+            unitElemets.push(<Dropdown.Item disabled={isUnitHead} eventKey={unit._id} key={unit._id}>{unit.unitName}</Dropdown.Item>);
         });
         setDropdownList(unitElemets);
     };
@@ -105,7 +122,7 @@ function KanbanBoard() {
             <FormGroup className="leftContainer">
                 <FormLabel>Select Unit:</FormLabel>
 
-                <Dropdown className="m-3" onSelect={id => { onUnitSelect(id) }}>
+                {!isUnitHead ? <Dropdown className="m-3" onSelect={id => { onUnitSelect(id) }}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         {unitName ? unitName : "Select Unit"}
                     </Dropdown.Toggle>
@@ -113,7 +130,7 @@ function KanbanBoard() {
                     <Dropdown.Menu>
                         {unitDropdownList}
                     </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown> : <Button className="m-3" variant='success' disabled>{unitName}</Button>}
 
             </FormGroup>
 
@@ -161,7 +178,7 @@ function KanbanBoard() {
             return null;
         }
         kanbanCol.forEach(card => {
-            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard id={card.jobid} action={kanbanSendToNext} title={`Employee ID - ${card.empid}`} header={card.jobid} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
+            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard eid={card.empid} id={card.jobid} action={kanbanSendToNext} title={`Employee ID - ${card.empid}`} header={card.jobid} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
         });
         // for (let n = 1; n < 10; n++) {
         //     cardArray.push(<tr><td key={n}><KanbanCard title={"Title: " + n} header={"Header : " + n} content={"Content: " + n} type={props.colNo} /></td></tr>);
@@ -196,9 +213,9 @@ function KanbanBoard() {
                 axios.post(backend + "/api/v1/job/update", changeData, options)
                     .then((res) => {
                         console.log(res.data);
-                        if(res.data.status===ResponseStatus.SUCCESS){
+                        if (res.data.status === ResponseStatus.SUCCESS) {
                             console.log("Successfully updated");
-                        }else{
+                        } else {
                             alert(`Error: ${res.data.status}`);
                         }
                         getKanbanData();
@@ -252,7 +269,7 @@ function KanbanBoard() {
                         console.error("Invalid kanban data");
                     }
                 })
-                .catch(err => {console.error(err);alert(err.response.data.message)});
+                .catch(err => { console.error(err); alert(err.response.data.message) });
         }
     };
 

@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { useParams } from "react-router";
+import { BackendAddress, RequestOptions } from "../../functions/HTTPReqData";
 import { unitData } from "../../types/unitData";
 
 function AddJob() {
-    const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+    const backend = BackendAddress;
 
     const [unit, setUnit] = useState("adasdasdas");
     const [unitId, setUnitId] = useState("");
@@ -17,11 +18,7 @@ function AddJob() {
     const [unitList, setUnitList] = useState<Array<unitData>>([]);
     const [unitDropdownList, setUnitDropdown] = useState<Array<JSX.Element>>([]);
 
-    const options = {
-        headers: {
-            Authorization: `bearer ${window.sessionStorage.getItem('token')}`
-        }
-    };
+    const options = RequestOptions;
 
     var { uId } = useParams();
 

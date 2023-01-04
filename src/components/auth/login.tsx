@@ -4,8 +4,10 @@ import { Button, Form } from "react-bootstrap";
 import { authRes } from "../../types/authResponse";
 import { loginData } from "../../types/logindata";
 import { isAuthRes, isLogindata } from "../../validations/typeChecks";
+import { Departments,DepartmentsCode,Units,UnitsCodes } from "../../enums/enums";
+import { BackendAddress } from "../../functions/HTTPReqData";
 
-const backend = process.env.REACT_APP_BACKEND_DOMAIN;
+const backend = BackendAddress;
 
 function LoginPage() {
 
@@ -63,6 +65,8 @@ function LoginPage() {
                             window.sessionStorage.setItem('refreshToken',authData.refreshToken);
                             window.sessionStorage.setItem('userDept',authData.data.user.userDept);
                             window.sessionStorage.setItem('email',email);
+                            window.sessionStorage.setItem('deptId',authData.data.user.userDeptid);
+                            
                             window.location.reload();
                         }else{
                             console.log("Invalid response:");
