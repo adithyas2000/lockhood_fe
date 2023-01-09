@@ -42,7 +42,7 @@ export function MakePieChart(props: props) {
             </div>
             <div className="mapContainer">
                 {props.data.map((entry, index) => (
-                    <div key={index} style={{ display: 'flex', marginLeft: '20px', paddingBottom: '20px' }}><div style={{ width: '23px', marginRight: '5px', backgroundColor: COLORS[index] }}></div><div>{entry.name} - {COLORS[index]}</div></div>
+                    <div key={index} style={{ display: 'flex', marginLeft: '20px', paddingBottom: '20px' }}><div style={{ width: '23px', marginRight: '5px', backgroundColor: COLORS[index] }}></div><div>{entry.name}</div></div>
                 ))}
             </div>
         </div>

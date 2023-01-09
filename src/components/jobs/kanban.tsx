@@ -191,10 +191,10 @@ function KanbanBoard() {
             if (type === 3) {
                 axios.get(backend + `/api/v1/job/complete/${id}`, options)
                     .then(res => {
-                        console.log("Successfully removed");
+                        console.log("Successfully marked as complete");
                         console.log(res.data);
                         if (res.data.status === ResponseStatus.SUCCESS) {
-                            alert(`Successfully removed job with id ${id}`);
+                            // alert(`Successfully removed job with id ${id}`);
                             // window.location.reload();
                             getKanbanData();
                         }

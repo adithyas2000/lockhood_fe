@@ -20,6 +20,8 @@ import ViewInventory from './components/inventory/viewInventory';
 import UpdateInventoryPage from './components/inventory/updateInventory';
 import AssignEmployeePage from './components/jobs/assignEmployee';
 import ViewAllEmployeesPage from './components/employees/viewAllEmployees';
+import CreateProductPage from './components/products/createProductPage';
+import ViewProducts from './components/products/viewProducts';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -82,6 +84,15 @@ const router = createBrowserRouter([
   {
     path:'/inventory/update/:mId',
     element:<UpdateInventoryPage/>
+  },
+  // PRODUCT ROUTES
+  {
+    path:'/products/create',
+    element:<CreateProductPage/>
+  },
+  {
+    path:'/products/view',
+    element:<ViewProducts/>
   }
 ]);
 

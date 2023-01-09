@@ -45,6 +45,12 @@ function NavStrip() {
                                 <NavDropdown.Item href="/inventory/view">View Inventory</NavDropdown.Item>
                             </NavDropdown>
 
+                            {/* Products */}
+                            <NavDropdown title="Prodcuts" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/products/create">Add Product</NavDropdown.Item>
+                                <NavDropdown.Item href="/products/view">View Products</NavDropdown.Item>
+                            </NavDropdown>
+
                         </Nav> : ""}
                     <Nav>
                         {window.sessionStorage.getItem('email') ?
