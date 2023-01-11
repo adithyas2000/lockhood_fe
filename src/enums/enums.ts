@@ -65,6 +65,13 @@ export enum UnitsCodes {
   WHU = "WHU",
 }
 
+export enum orderReqStatus {
+  CREATED = "created",
+  SENT = "sent",
+  PROCESSING = "processing",
+  COMPLETED = "completed",
+}
+
 export enum JobStatus {
   BACKLOG = "backlog",
   INPROGRESS = "inprogress",

@@ -10,9 +10,6 @@ import Dashboard from './components/dashboard';
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './css/colors.css';
 import KanbanBoard from './components/jobs/kanban';
-import KanbanCard from './components/jobs/kanbanCard';
-import SalesPage from './components/salesPage';
-import OrderRequestsPage from './components/orderRequestsPage';
 import AddJob from './components/jobs/addJob';
 import AddEmployeePage from './components/employees/addEmployee';
 import CreateInventoryPage from './components/inventory/createInventory';
@@ -22,6 +19,15 @@ import AssignEmployeePage from './components/jobs/assignEmployee';
 import ViewAllEmployeesPage from './components/employees/viewAllEmployees';
 import CreateProductPage from './components/products/createProductPage';
 import ViewProducts from './components/products/viewProducts';
+import ViewOrderreqs from './components/orderreqs/viewOrderreqs';
+import MainViewOrderreqs from './components/orderreqs/mainOrderReqs';
+import EditProductPage from './components/products/editProduct';
+import CreateSalePage from './components/sales/createSale';
+import CreateInventoryUnitPage from './components/inventory/createInventoryUnit';
+import SetPPUPage from './components/orderreqs/setPPU';
+import GetReqByDateRangeReport from './components/reports/jinali/getReqByDateRange';
+import MonthlyIncomeReport from './components/reports/jinali/monthlyIncomeReport';
+import UnitInventoriesReport from './components/reports/hashan/unitInventoriesReport';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -56,12 +62,16 @@ const router = createBrowserRouter([
   },
   // REPORTS
   {
-    path:"/salesReport",
-    element:<SalesPage/>
+    path:'/reports/getreqbydaterange',
+    element:<GetReqByDateRangeReport/>
   },
   {
-    path:'/orderRequests',
-    element:<OrderRequestsPage/>
+    path:'/reports/monthlyincome',
+    element:<MonthlyIncomeReport/>
+  },
+  {
+    path:'/reports/unitinvreport',
+    element:<UnitInventoriesReport/>
   },
   // EMPLOYEE ROUTES
   {
@@ -85,6 +95,10 @@ const router = createBrowserRouter([
     path:'/inventory/update/:mId',
     element:<UpdateInventoryPage/>
   },
+  {
+    path:'/inventory/unit/create',
+    element:<CreateInventoryUnitPage/>
+  },
   // PRODUCT ROUTES
   {
     path:'/products/create',
@@ -93,6 +107,24 @@ const router = createBrowserRouter([
   {
     path:'/products/view',
     element:<ViewProducts/>
+  },
+  {
+    path:'/products/edit/:pid',
+    element:<EditProductPage/>
+  },
+  // ORDER REQ ROUTES
+  {
+    path:'/orderreqs/view',
+    element:<MainViewOrderreqs/>
+  },
+  {
+    path:'/orderreqs/setppu/:reqId',
+    element:<SetPPUPage/>
+  },
+  // SALES ROUTES
+  {
+    path:'/sales/create',
+    element:<CreateSalePage/>
   }
 ]);
 

@@ -178,7 +178,7 @@ function KanbanBoard() {
             return null;
         }
         kanbanCol.forEach(card => {
-            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard eid={card.empid} id={card.jobid} action={kanbanSendToNext} title={`Employee ID - ${card.empid}`} header={card.jobid} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
+            cardArray.push(<table style={{ width: "33%", verticalAlign: "top" }} key={card.jobid}><tbody><tr><td><KanbanCard expStart={card.expectedStartDate} expEnd={card.expectedFinishDate} eid={card.empid} id={card.jobid} action={kanbanSendToNext}  header={card.jobid} content={card.description} type={props.colNo} /></td></tr></tbody></table>);
         });
         // for (let n = 1; n < 10; n++) {
         //     cardArray.push(<tr><td key={n}><KanbanCard title={"Title: " + n} header={"Header : " + n} content={"Content: " + n} type={props.colNo} /></td></tr>);

@@ -185,7 +185,7 @@ function AddJob() {
 
                 <Form.Group className="mb3">
                     <Form.Label>Allocated Hours</Form.Label>
-                    <Form.Control type="number" onChange={e => setAllocatedHours(Number(e.target.value))} />
+                    <Form.Control type="number" min={0} onChange={e => setAllocatedHours(Number(e.target.value))} />
                 </Form.Group>
 
                 <Form.Group className="mb3">

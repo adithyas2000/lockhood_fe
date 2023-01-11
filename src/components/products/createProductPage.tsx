@@ -49,7 +49,7 @@ function CreateProductPage() {
 
 
                 <br />
-                <Form.Control type="submit" className="btn btn-primary" value="Add employee" onClick={e => { e.preventDefault(); createProd(); }} />
+                <Form.Control type="submit" className="btn btn-primary" value="Add Product" onClick={e => { e.preventDefault(); createProd(); }} />
             </Form>
         </div>
     );

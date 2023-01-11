@@ -70,15 +70,13 @@ export function isSalesReportData(data: any): salesReport {
 export function isOrderReqData(data: any): orderRequestData {
     return (
         data &&
-        typeof (data['req_id']) == 'string' &&
-        typeof (data['req_status']) == 'string' &&
-        typeof (data['material_name']) == 'string' &&
-        typeof (data['available_qty']) == 'number' &&
-        typeof (data['requested_date']) == 'string' &&
-        typeof (data['sent_to_purchase']) == 'boolean' &&
-        typeof (data['requested_qty']) == 'number' &&
-        typeof (data['price_per_unit']) == 'number' &&
-        typeof (data['completed_date']) == 'string'
+        typeof (data['reqid']) == 'string' &&
+        typeof (data['unitid']) == 'string' &&
+        typeof (data['reqStatus']) == 'string' &&
+        typeof (data['sentToPurchase']) == 'boolean' &&
+        typeof (data['isCompleted']) == 'boolean' &&
+        typeof (data['availableQty']) == 'number' &&
+        typeof (data['materialid']) == 'string'
 
     );
 };

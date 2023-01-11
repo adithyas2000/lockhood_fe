@@ -3,6 +3,7 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import logout from "../functions/logout";
 
 function NavStrip() {
+    const deptId = window.sessionStorage.getItem('deptId');
     useEffect(() => {
 
         const path: string = window.location.href;
@@ -43,12 +44,33 @@ function NavStrip() {
                             <NavDropdown title="Inventory" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/inventory/create">Create Inventory</NavDropdown.Item>
                                 <NavDropdown.Item href="/inventory/view">View Inventory</NavDropdown.Item>
+                                <NavDropdown.Item href="/inventory/unit/create">Create Inventory Unit</NavDropdown.Item>
                             </NavDropdown>
 
                             {/* Products */}
                             <NavDropdown title="Prodcuts" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/products/create">Add Product</NavDropdown.Item>
                                 <NavDropdown.Item href="/products/view">View Products</NavDropdown.Item>
+                            </NavDropdown>
+
+                            {/* Order Requests */}
+                            <NavDropdown title="Order Requests" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/orderreqs/view">View Order Requests</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="/products/view">View Products</NavDropdown.Item> */}
+                            </NavDropdown>
+
+                            {/* Sales */}
+                            <NavDropdown title="Sales" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/sales/create">Add Sale</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="/products/view">View Products</NavDropdown.Item> */}
+                            </NavDropdown>
+
+                            {/* Reports */}
+                            <NavDropdown title="Reports" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/reports/getreqbydaterange">Get requests by date range</NavDropdown.Item>
+                                <NavDropdown.Item href="/reports/monthlyincome">Monthly Income Report</NavDropdown.Item>
+                                
+                                <NavDropdown.Item href="/reports/unitinvreport">Inventory Report Per Unit</NavDropdown.Item>
                             </NavDropdown>
 
                         </Nav> : ""}
