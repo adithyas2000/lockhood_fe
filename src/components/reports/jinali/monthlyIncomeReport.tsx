@@ -76,6 +76,7 @@ function MonthlyIncomeReport() {
     const Report = React.forwardRef((props, ref) => {
         return (
             <div ref={ref as LegacyRef<HTMLDivElement> | null}>
+                <h1>Monthly Income Report</h1>
                 <Table striped hover className="whitebg">
                     <thead>
                         <tr>
@@ -87,8 +88,8 @@ function MonthlyIncomeReport() {
                     <tbody>
                         <tr>
                             <td>{totalIncome}</td>
-                            <td>{dateFrom}</td>
-                            <td>{dateTo}</td>
+                            <td>{dateFrom.split('T')[0]}</td>
+                            <td>{dateTo.split('T')[0]}</td>
                         </tr>
                     </tbody>
                 </Table>

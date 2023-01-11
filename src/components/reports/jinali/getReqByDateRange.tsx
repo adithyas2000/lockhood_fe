@@ -46,7 +46,7 @@ function GetReqByDateRangeReport(){
         if(reportData.length>0){
             var tempArray:Array<JSX.Element>=[];
             reportData.forEach(row=>{
-                tempArray.push(<tr><td>{row.reqid}</td><td>{row.unitid}</td><td>{row.reqStatus}</td><td>{row.materialid}</td><td>{row.availableQty}</td><td>{`${row.isCompleted}`}</td><td>{`${row.sentToPurchase}`}</td><td>{row.requestedDate.split('T')[0]}</td><td>{row.requestedQty}</td><td>{row.pricePerUnit}</td><td>{row.completedDate.split('T')[0]}</td></tr>)
+                tempArray.push(<tr key={row.reqid}><td>{row.reqid}</td><td>{row.unitid}</td><td>{row.reqStatus}</td><td>{row.materialid}</td><td>{row.availableQty}</td><td>{`${row.isCompleted}`}</td><td>{`${row.sentToPurchase}`}</td><td>{row.requestedDate.split('T')[0]}</td><td>{row.requestedQty}</td><td>{row.pricePerUnit}</td><td>{row.completedDate.split('T')[0]}</td></tr>)
             });
             setReportRows(tempArray);
         }
@@ -55,6 +55,7 @@ function GetReqByDateRangeReport(){
     const Report=React.forwardRef((props,ref)=>{
         return(
             <div ref={ref as LegacyRef<HTMLDivElement> | null}>
+                <h1>Order Requests By Date Range</h1>
             <Table striped hover className="whitebg">
                 <thead>
                     <tr>
